@@ -1,0 +1,26 @@
+{
+  "name": "tp3",
+  "version": "1.0.0",
+  "description": "Trabajo practico de BDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "clear && cucumber-js --publish-quiet",
+    "coverage": "nyc --reporter=html cucumber-js --publish-quiet"
+  },
+  "keywords": [
+    "BDD",
+    "testing",
+    "IoT",
+    "UBA"
+  ],
+  "author": "Gonzalo Nahuel Vaca",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^7.0.0-rc.0",
+    "chai": "^4.2.0",
+    "nyc": "^15.1.0"
+  },
+  "nyc": {
+    "exclude": "features/**" 
+  }  
+}
