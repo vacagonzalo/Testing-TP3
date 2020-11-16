@@ -11,53 +11,51 @@ module.exports = class List {
 
     create(element) {
         let key = element[0];
-        if (typeof (key) == 'string' && !this.exist(key)) {
+        if (typeof (key) == 'string' && !this.exist(key))
             this.#elements.push(element);
-        }
     }
 
     read(key) {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#elements[i][0] == key) {
-                return this.#elements[i][1];
-            }
-        }
+        let index = this.keyIndex(key);
+        if (this.isValidIndex(index)) return this.#elements[index][1];
         return null
     }
 
     update(key, value) {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#elements[i][0] == key) {
-                this.#elements[i][1] = value;
-            }
-        }
+        let index = this.keyIndex(key);
+        if (this.isValidIndex(index)) this.#elements[index][1] = value
     }
 
     delete(key) {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#elements[i][0] == key) {
-                this.#elements.splice(i, 1);
-                return;
-            }
-        }
+        let index = this.keyIndex(key);
+        if (this.isValidIndex(index)) this.#elements.splice(index, 1);
     }
 
     exist(key) {
-        for (let i = 0; i < this.#elements.length; i++) {
-            if (this.#elements[i][0] == key) {
-                return true;
-            }
-        }
-        return false;
+        let index = this.keyIndex(key);
+        return index != -1;
     }
 
     sortedKeys() {
         let keys = [];
-        if(this.amount() != 0) {
-            for(let i = 0; i < this.#elements.length; i++) {
+        if (this.amount() != 0) {
+            for (let i = 0; i < this.#elements.length; i++) {
                 keys.push(this.#elements[i][0]);
             }
             return keys.sort();
         }
+    }
+
+    keyIndex(key) {
+        for (let index = 0; index < this.#elements.length; index++) {
+            if (this.#elements[index][0] == key) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    isValidIndex(index) {
+        return index != -1;
     }
 };
