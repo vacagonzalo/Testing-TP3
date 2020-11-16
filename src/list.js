@@ -33,7 +33,7 @@ module.exports = class List {
 
     exist(key) {
         let index = this.keyIndex(key);
-        return index != -1;
+        return this.isValidIndex(index);
     }
 
     sortedKeys() {
