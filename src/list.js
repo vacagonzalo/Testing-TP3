@@ -16,24 +16,25 @@ module.exports = class List {
     }
 
     read(key) {
-        let index = this.keyIndex(key);
-        if (this.isValidIndex(index)) return this.#elements[index][1];
-        return null
+        return this.onKey(key, (index) => {
+            return this.#elements[index][1];
+        });
     }
 
     update(key, value) {
-        let index = this.keyIndex(key);
-        if (this.isValidIndex(index)) this.#elements[index][1] = value
+        this.onKey(key, (index) => {
+            this.#elements[index][1] = value;
+        });
     }
 
     delete(key) {
-        let index = this.keyIndex(key);
-        if (this.isValidIndex(index)) this.#elements.splice(index, 1);
+        this.onKey(key, (index) => {
+            this.#elements.splice(index, 1);
+        });
     }
 
     exist(key) {
-        let index = this.keyIndex(key);
-        return this.isValidIndex(index);
+        return this.onKey(key, () => { return true; })
     }
 
     sortedKeys() {
@@ -57,5 +58,11 @@ module.exports = class List {
 
     isValidIndex(index) {
         return index != -1;
+    }
+
+    onKey(key, callback) {
+        let index = this.keyIndex(key);
+        if (this.isValidIndex(index)) return callback(index);
+        return null
     }
 };
